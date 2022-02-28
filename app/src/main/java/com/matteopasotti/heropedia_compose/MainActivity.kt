@@ -5,6 +5,9 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
@@ -13,6 +16,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import com.matteopasotti.heropedia_compose.models.Character
+import com.matteopasotti.heropedia_compose.ui.components.MarvelCardCharacter
 import com.matteopasotti.heropedia_compose.ui.screens.home.HomeState
 import com.matteopasotti.heropedia_compose.ui.screens.home.HomeViewModel
 import com.matteopasotti.heropedia_compose.ui.theme.HeropediaComposeTheme
@@ -33,31 +38,30 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colors.background
                 ) {
-                    Greeting("Android")
+                    when(val state = homeState) {
+                        is HomeState.Content -> {
+                            ListCharacters(characters = state.characters)
+                        }
+                        is HomeState.Idle -> {}
+                        is HomeState.Error -> {}
+                    }
                 }
 
-                when(val state = homeState) {
-                    is HomeState.Content -> {
-                        (state as HomeState.Content).characters
-                        Log.d("HH", "HH")
-                    }
-                    is HomeState.Idle -> {}
-                    is HomeState.Error -> {}
-                }
+
             }
         }
     }
 }
 
-@Composable
-fun Greeting(name: String) {
-    Text(text = "Hello $name!")
-}
 
-@Preview(showBackground = true)
 @Composable
-fun DefaultPreview() {
-    HeropediaComposeTheme {
-        Greeting("Android")
+fun ListCharacters(characters: List<Character>) {
+    LazyColumn(modifier = Modifier.fillMaxWidth()) {
+        items(characters) { character ->
+            val url = character.thumbnail.path + "." +  character.thumbnail.extension
+            MarvelCardCharacter(imageUrl = url, title = character.name) {
+
+            }
+        }
     }
 }
