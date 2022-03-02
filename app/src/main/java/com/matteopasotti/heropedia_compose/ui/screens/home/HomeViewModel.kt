@@ -1,26 +1,19 @@
 package com.matteopasotti.heropedia_compose.ui.screens.home
 
-import androidx.lifecycle.viewModelScope
+import androidx.paging.Pager
+import androidx.paging.PagingConfig
+import androidx.paging.PagingData
+import com.matteopasotti.heropedia_compose.models.Character
 import com.matteopasotti.heropedia_compose.repositories.CharacterRepository
 import com.matteopasotti.heropedia_compose.viewmodels.BaseStateViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
+import kotlinx.coroutines.flow.Flow
 
-class HomeViewModel(private val characterRepository: CharacterRepository) :
-    BaseStateViewModel<HomeState, HomeEvents>(HomeState.Idle) {
+class HomeViewModel(
+    private val characterRepository: CharacterRepository
+) : BaseStateViewModel<HomeState, HomeEvents>(HomeState.Idle) {
 
-    init {
-        viewModelScope.launch(Dispatchers.IO) {
-            getCharacters()
-        }
-    }
+    val characters: Flow<PagingData<Character>> = Pager(PagingConfig(pageSize = 20)) {
+        CharacterSource(characterRepository)
+    }.flow
 
-    private suspend fun getCharacters() {
-        val items =
-            characterRepository.getCharacters("-modified", offset = 0, limit = 20).data.results
-
-        if (items != null) {
-            setState(HomeState.Content(characters = items))
-        }
-    }
 }

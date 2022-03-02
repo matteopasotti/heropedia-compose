@@ -77,6 +77,10 @@ dependencies {
     implementation 'androidx.compose.runtime:runtime-livedata:1.0.5'
     implementation "androidx.compose.compiler:compiler:1.0.5"
 
+    // Compose Paging
+    implementation("androidx.paging:paging-compose:1.0.0-alpha14")
+
+
 
     // Image Loading
     implementation "io.coil-kt:coil-compose:1.4.0"
