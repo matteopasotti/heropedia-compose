@@ -18,6 +18,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.matteopasotti.heropedia_compose.models.Character
 import com.matteopasotti.heropedia_compose.ui.components.MarvelCardCharacter
+import com.matteopasotti.heropedia_compose.ui.components.MarvelCardCharacterWithTitle
 import com.matteopasotti.heropedia_compose.ui.screens.home.HomeState
 import com.matteopasotti.heropedia_compose.ui.screens.home.HomeViewModel
 import com.matteopasotti.heropedia_compose.ui.theme.HeropediaComposeTheme
@@ -59,7 +60,7 @@ fun ListCharacters(characters: List<Character>) {
     LazyColumn(modifier = Modifier.fillMaxWidth()) {
         items(characters) { character ->
             val url = character.thumbnail.path + "." +  character.thumbnail.extension
-            MarvelCardCharacter(imageUrl = url, title = character.name) {
+            MarvelCardCharacterWithTitle(imageUrl = url, title = character.name) {
 
             }
         }
