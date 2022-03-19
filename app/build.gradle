@@ -81,6 +81,12 @@ dependencies {
     implementation("androidx.paging:paging-compose:1.0.0-alpha14")
 
 
+    // Room
+    implementation("androidx.room:room-runtime:$roomVersion")
+    annotationProcessor("androidx.room:room-compiler:$roomVersion")
+
+    // Gson
+    implementation "com.google.code.gson:gson:2.9.0"
 
     // Image Loading
     implementation "io.coil-kt:coil-compose:1.4.0"

@@ -4,6 +4,7 @@ buildscript {
         koin_version= '3.2.0-beta-1'
         retrofit_version = '2.9.0'
         okhttp3_version = '4.9.3'
+        roomVersion = '2.4.2'
     }
     repositories {
         mavenCentral()
